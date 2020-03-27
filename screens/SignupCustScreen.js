@@ -1,83 +1,96 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import { View, Alert } from 'react-native';
-import Colors from "../constants/Colors";
+import Colors from '../constants/Colors';
 import { TextInput } from 'react-native-gesture-handler';
-
-import { connect } from "react-redux";
+import AsyncStorage from '@react-native-community/async-storage';
+import { connect } from 'react-redux';
 import * as actions from '../store/actions/Auth';
-import ConstApp from "../constants/ConstApp";
+import ConstApp from '../constants/ConstApp';
 import MyButton from '../components/MyButton';
 import styles from './Styles/Form';
-import myAlert from '../components/MyAlert'
+import myAlert from '../components/MyAlert';
 
 class SignupCustScreen extends Component {
-
     constructor(props) {
         super(props);
 
         this.state = {
             loading: false,
-            number: "",
-            fullName: "",
-            email: "",
-            password: "",
-            re_password: "",
+            number: '',
+            fullName: '',
+            email: '',
+            password: '',
+            re_password: '',
             id_type_user: this.props.id_type_user,
         };
-        this.onRegister = this.onRegister.bind(this)
+        this.onRegister = this.onRegister.bind(this);
         //console.log(this.props);
-
     }
     /* componentDidUpdate() {
-        console.log("componentDidUpdate : ")
-        console.log(this.props)
-    } */
+          console.log("componentDidUpdate : ")
+          console.log(this.props)
+      } */
 
     //screenCustomer() { }
 
     onRegister = () => {
-
-        const reg_numero = new RegExp("^[0-9]{8}$");
-        const reg_email = new RegExp("^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,7}$");
+        const reg_numero = new RegExp('^[0-9]{8}$');
+        const reg_email = new RegExp('^[a-z0-9._-]+@[a-z0-9._-]{2,}.[a-z]{2,7}$');
         const { navigation } = this.props;
-        const { number, password, email, fullName, re_password, id_type_user } = this.state;
+        const {
+            number,
+            password,
+            email,
+            fullName,
+            re_password,
+            id_type_user,
+        } = this.state;
         //console.log(this.state);
 
-
-
-        if (!reg_numero.test(number) ||
+        if (
+            !reg_numero.test(number) ||
             !reg_email.test(email) ||
             !fullName.length > 3 ||
-            password.length <= 4 ||
-            password !== re_password) {
+            password.length <= 6 ||
+            password !== re_password
+        ) {
             msg = 'Renseignez convenablement les champs';
-            if (reg_numero.test(number) &&
-                reg_email.test(email) &&
-                fullName.length > 3 &&
-                password.length > 4 ||
-                password !== re_password) {
-                msg = 'Vos mot de passe ne sont pas identique'
+            if (
+                (reg_numero.test(number) &&
+                    reg_email.test(email) &&
+                    fullName.length > 3 &&
+                    password.length > 6) ||
+                password !== re_password
+            ) {
+                msg = 'Vos mot de passe ne sont pas identique';
             }
 
-            if (reg_numero.test(number) &&
+            if (
+                reg_numero.test(number) &&
                 reg_email.test(email) &&
                 fullName.length > 3 &&
                 password.length <= 4 &&
-                password === re_password) {
-                msg = 'Votre mot de passe doit avoir au moins 5 caractères'
+                password === re_password
+            ) {
+                msg = 'Votre mot de passe doit avoir au moins 5 caractères';
             }
-            myAlert(null, msg)
-
-
+            myAlert(null, msg);
         } else {
             //navigation.navigate('Main');
-            this.props.onAuth(number, email, fullName, password, re_password, id_type_user, navigation)
-
+            this.props.onAuth(
+                number,
+                email,
+                fullName,
+                password,
+                re_password,
+                id_type_user,
+                navigation,
+            );
         }
-
-
-
-    }
+    };
 
     render() {
         //const { loading } = this.state;
@@ -85,11 +98,9 @@ class SignupCustScreen extends Component {
         //console.log(this.props)
         return (
             <View style={styles.container}>
-                {
-                    this.props.error !== null ?
-                        myAlert(this.props.titleError, this.props.error)
-                        : null
-                }
+                {this.props.error !== null
+                    ? myAlert(this.props.titleError, this.props.error)
+                    : null}
                 <View style={styles.InputContainer}>
                     <TextInput
                         autoFocus
@@ -113,7 +124,7 @@ class SignupCustScreen extends Component {
                         value={this.state.fullName}
                         placeholderTextColor={Colors.grey}
                         underlineColorAndroid="transparent"
-                        autoCapitalize='words'
+                        autoCapitalize="words"
                         disabled={this.props.loading ? true : false}
                     />
                 </View>
@@ -125,7 +136,7 @@ class SignupCustScreen extends Component {
                         value={this.state.email}
                         placeholderTextColor={Colors.grey}
                         underlineColorAndroid="transparent"
-                        autoCompleteType='email'
+                        autoCompleteType="email"
                         keyboardType="email-address"
                         disabled={this.props.loading ? true : false}
                     />
@@ -155,9 +166,10 @@ class SignupCustScreen extends Component {
                     />
                 </View>
                 <MyButton
-                    nameBtn={`Valider`}
+                    nameBtn={'Valider'}
                     loading={this.props.loading}
-                    onPress={this.onRegister} />
+                    onPress={this.onRegister}
+                />
                 {/* <Button
                     containerStyle={styles.loginContainer}
                     style={styles.loginText}
@@ -186,10 +198,29 @@ const mapStateToProps = state => ({
     id_type_user: state.reducerAuth.id_type_user,
 });
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (number, email, fullName, password, re_password, id_type_user, navigation) =>
-            dispatch(actions.authSignUp(number, fullName, email, password, re_password, id_type_user, navigation))
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(SignupCustScreen);
+        onAuth: (
+            number,
+            email,
+            fullName,
+            password,
+            id_type_user,
+            navigation,
+        ) =>
+            dispatch(
+                actions.authSignUp(
+                    number,
+                    fullName,
+                    email,
+                    password,
+                    id_type_user,
+                    navigation,
+                ),
+            ),
+    };
+};
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(SignupCustScreen);

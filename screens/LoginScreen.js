@@ -33,10 +33,10 @@ class LoginScreen extends Component {
         //console.log(this.state);
         //this.setState({ loading: true });
         //const { navigation } = this.props;
-        if (!reg_numero.test(number) || password.length <= 4) {
+        if (!reg_numero.test(number) || password.length <= 6) {
             msg = 'Renseignez convenablement les champs';
-            if (password.length <= 4 && reg_numero.test(number)) {
-                msg = 'Votre mot de passe doit avoir au moins 5 caractères';
+            if (password.length <= 6 && reg_numero.test(number)) {
+                msg = 'Votre mot de passe doit avoir au moins 6 caractères';
             }
             Alert.alert('Oups ! Attention', msg);
             //this.setState({ loading: false })

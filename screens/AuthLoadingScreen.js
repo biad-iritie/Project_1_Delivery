@@ -7,6 +7,7 @@ import {
   View,
 } from 'react-native';
 import { connect } from 'react-redux';
+import * as actions from '../store/actions/Auth';
 import Colors from '../constants/Colors';
 
 class AuthLoadingScreen extends React.Component {
@@ -18,24 +19,22 @@ class AuthLoadingScreen extends React.Component {
     //const userToken = await AsyncStorage.getItem('@User');
     try {
       const user = await AsyncStorage.getItem('@User');
-      /* if (user) {
-        this.setState({
-          userToken: user.userToken
-            numero: ,
-          fullName: "",
-          email: "",
-          user: user
-        })
-      } else {
-
-      } */
-      if (user) {
+      console.log('--Check User dans AuthLoading--');
+      console.log(user);
+      if (user !== null) {
         /* navigation.dispatch({
           type: 'Login',
           user: user,
         }); */
         // This will switch to the App screen or Auth screen and this loading
         // screen will be unmounted and thrown away.
+        this.props.onAuth(
+          user.number,
+          user.email,
+          user.fullName,
+          user.password,
+          user.id_type_user,
+        );
         this.props.navigation.navigate('Main');
       } else {
         // This will switch to the App screen or Auth screen and this loading
@@ -45,7 +44,7 @@ class AuthLoadingScreen extends React.Component {
 
       //console.log(user);
     } catch (error) {
-      alert('error :' + error);
+      alert(`error : ${error}`);
     }
   };
   // Render any loading content that you like here
@@ -70,4 +69,12 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   user: state.user,
 });
+const mapDispatchToProps = dispatch => {
+  return {
+    onAuth: (number, email, fullName, password, id_type_user) =>
+      dispatch(
+        actions.authSuccess(number, fullName, email, password, id_type_user),
+      ),
+  };
+};
 export default connect(mapStateToProps)(AuthLoadingScreen);

@@ -71,7 +71,8 @@ class HomeScreen extends React.Component {
         {this.props.id_type_user !== 1 ? null : (
           <ActionButton
             buttonColor={Colors.tintColor1}
-            onPress={() => this.props.navigation.navigate('AddCourse')}>
+            onPress={() => this.props.navigation.navigate('AddCourse')}
+          >
             <Icon name="md-create" style={styles.actionButtonIcon} />
             {/*<ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>
             <Icon name="md-create" style={styles.actionButtonIcon} />

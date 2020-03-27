@@ -12,7 +12,7 @@ const Stack = createStackNavigator();
 export default function AppNavigator() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Main" headerMode="none">
+      <Stack.Navigator initialRouteName="AuthLoading" headerMode="none">
         <Stack.Screen name="Main" component={MainTabNavigator} />
         <Stack.Screen name="AuthLoading" component={AuthLoadingScreen} />
         <Stack.Screen name="Welcome" component={WelcomeNavigator} />
