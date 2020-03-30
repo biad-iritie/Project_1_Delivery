@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Image, ActionSheetIOS } from 'react-native';
+import { Text, View, Image } from 'react-native';
 
 import MyButton from '../components/MyButton';
 import ConstApp from '../constants/ConstApp';
-import styles from './Styles/Welcome';
+import styles from './styles/Welcome';
 
 class WelcomeScreen extends Component {
     constructor(props) {
@@ -45,7 +45,7 @@ class WelcomeScreen extends Component {
             ) */
 
         /* Sign up of customer */
-        this.props.navigation.navigate('SignupCustScreen', { who: 1 });
+        this.props.navigation.navigate('SignupCustScreen');
     };
     render() {
         return (

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import styles from './style/CoursesItem';
 
-class CoursesItem extends Component {
+class CoursesItemCust extends Component {
     constructor(props) {
         super(props);
     }
@@ -44,10 +44,10 @@ class CoursesItem extends Component {
                 <View>
 
                     <TouchableOpacity style={styles.button} onPress={this.Answer_Course}>
-                        <Text > Detail  </Text>
+                        <Text > Modifier  </Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button2} onPress={this.Answer_Course}>
-                        <Text style={{ fontWeight: 'bold', }}> Partant !  </Text>
+                        <Text > Supprimer  </Text>
                     </TouchableOpacity>
                 </View>
             </View >
@@ -56,4 +56,4 @@ class CoursesItem extends Component {
 }
 
 
-export default CoursesItem;
+export default CoursesItemCust;

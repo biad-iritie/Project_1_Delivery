@@ -10,7 +10,7 @@ import ConstApp from '../constants/ConstApp';
 import * as actions from '../store/actions/Auth';
 import { connect } from 'react-redux';
 import MyButton from '../components/MyButton';
-import styles from './Styles/Form';
+import styles from './styles/Form';
 import myAlert from '../components/MyAlert';
 
 class LoginScreen extends Component {

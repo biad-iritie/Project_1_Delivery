@@ -94,15 +94,17 @@ export const authSignUp = (
     return dispatch => {
         dispatch(authStart());
         //dispatch(authSuccess(123, id_type_user, number, fullName))
+        //console.log('Action Auth');
+
         //console.log(navigation);
         //navigation.navigate('Main');
         try {
             //appel de l api
-            AsyncStorage.setItem('@User:token', '143124325454d45354bSX');
-            AsyncStorage.setItem('@User:typeUser', id_type_user);
-            AsyncStorage.setItem('@User:number', number);
-            AsyncStorage.setItem('@User:email', email);
-            AsyncStorage.setItem('@User:fullName', fullName);
+            AsyncStorage.setItem('token', '143124325454d45354bSX');
+            AsyncStorage.setItem('type', JSON.stringify(id_type_user));
+            AsyncStorage.setItem('number', number);
+            AsyncStorage.setItem('email', email);
+            AsyncStorage.setItem('fullName', fullName);
 
             dispatch(
                 authSuccess(
@@ -163,4 +165,5 @@ export const authSignUp = (
                 dispatch(authFail(err));
             }); */
     };
+
 };

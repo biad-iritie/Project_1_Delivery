@@ -51,6 +51,7 @@ const reducerAuth = (state = initialState, action) => {
             return authStart(state, action);
 
         case actionTypes.AUTH_SUCCESS:
+
             return authSuccess(state, action);
 
         case actionTypes.AUTH_FAIL:
@@ -62,23 +63,6 @@ const reducerAuth = (state = initialState, action) => {
             return state;
     }
 };
-/* function auth(state = initialState, action) {
-    let nextState
-    switch (action.type) {
-        case "Login":
-            return {
-                ...state,
-                isLoggedIn: true,
-                numero: action.user.numero,
-                fullName: action.user.fullName,
-                email: action.user.email,
-                idType_User: action.user.idType_User,
-            };
-        default:
-            return state
-    }
-} */
 
-//export default auth;
 
 export default reducerAuth;

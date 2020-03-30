@@ -1,8 +1,11 @@
+/* eslint-disable prettier/prettier */
 import reducerAuth from './Auth';
-import { combineReducers } from "redux";
+import reducerCourses from './Courses';
+import { combineReducers } from 'redux';
 
 const AppReducer = combineReducers({
-    reducerAuth
+    reducerAuth,
+    reducerCourses,
 });
 
 export default AppReducer;
