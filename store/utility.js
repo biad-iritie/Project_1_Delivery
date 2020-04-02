@@ -5,3 +5,8 @@ export const updateObject = (oldObject, updatedProperties) => {
         ...updatedProperties,
     };
 };
+/* export const addObject=(oldObject,newObject) =>{
+    return{
+        [...oldObject,...newObject]
+    }
+} */

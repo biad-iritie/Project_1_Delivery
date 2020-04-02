@@ -1,8 +1,7 @@
-import React from 'react';
+/* eslint-disable prettier/prettier */
 import { Alert } from 'react-native';
 
-
-export default function myAlert(title, msg) {
+export default function MyAlert(title, msg) {
     if (title == null) {
         title = "Oups ! Attention"
     }

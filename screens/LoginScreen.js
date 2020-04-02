@@ -33,9 +33,9 @@ class LoginScreen extends Component {
         //console.log(this.state);
         //this.setState({ loading: true });
         //const { navigation } = this.props;
-        if (!reg_numero.test(number) || password.length <= 6) {
+        if (!reg_numero.test(number) || password.length < 6) {
             msg = 'Renseignez convenablement les champs';
-            if (password.length <= 6 && reg_numero.test(number)) {
+            if (password.length < 6 && reg_numero.test(number)) {
                 msg = 'Votre mot de passe doit avoir au moins 6 caractères';
             }
             Alert.alert('Oups ! Attention', msg);
@@ -50,9 +50,12 @@ class LoginScreen extends Component {
 
     render() {
         //const { loading } = this.state;
+        console.log(this.props);
+
         return (
             <View style={styles.container}>
-                {this.props.error !== null
+
+                {this.props.shownError === true && this.props.error !== null
                     ? myAlert(this.props.titleError, this.props.error)
                     : null}
                 <Image
@@ -111,6 +114,9 @@ const mapStateToProps = state => {
     return {
         loading: state.reducerAuth.loading,
         error: state.reducerAuth.error,
+        titleError: state.reducerAuth.titleError,
+        shownError: state.reducerAuth.shownError,
+
     };
 };
 

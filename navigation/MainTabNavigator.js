@@ -40,14 +40,22 @@ const Tab = createBottomTabNavigator();
 const HomeStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Le Monde des courses"
+      initialRouteName="Homescreen"
       screenOptions={{
         headerTitleAlign: 'center',
         headerTintColor: Colors.tintColor1,
       }}
     >
-      <Stack.Screen name="Le Monde des courses" component={HomeScreen} />
-      <Stack.Screen name="AddCourse" component={AddCourseScreen} />
+      <Stack.Screen
+        name="Homescreen"
+        component={HomeScreen}
+        options={{ title: 'Le Monde des courses' }}
+      />
+      <Stack.Screen
+        name="AddCourse"
+        component={AddCourseScreen}
+        options={{ title: 'Info course' }}
+      />
       <Stack.Screen name="AnswerCourse" component={AnswerCourse} />
     </Stack.Navigator>
   );

@@ -99,7 +99,7 @@ class SignupCustScreen extends Component {
         return (
             <ScrollView>
                 <View style={styles.container}>
-                    {this.props.error !== null
+                    {this.props.shownError === true && this.props.error !== null
                         ? myAlert(this.props.titleError, this.props.error)
                         : null}
                     <View style={styles.InputContainer}>
@@ -195,9 +195,10 @@ const mapStateToProps = state => ({
     loading: state.reducerAuth.loading,
     error: state.reducerAuth.error,
     titleError: state.reducerAuth.titleError,
-    number: state.reducerAuth.number,
-    fullName: state.reducerAuth.fullName,
-    email: state.reducerAuth.email,
+    shownError: state.reducerAuth.shownError,
+    /*  number: state.reducerAuth.number,
+     fullName: state.reducerAuth.fullName,
+     email: state.reducerAuth.email,*/
     id_type_user: state.reducerAuth.id_type_user,
 });
 

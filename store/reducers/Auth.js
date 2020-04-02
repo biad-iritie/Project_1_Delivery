@@ -12,12 +12,19 @@ const initialState = {
     id_type_user: ConstApp.ID_TYPE_CUSTOMER,
     error: null,
     titleError: null,
+    shownError: false,
 };
 
 const authStart = (state, action) => {
     return updateObject(state, {
         error: null,
         loading: true,
+        shownError: true,
+    });
+};
+const disableError = (state, action) => {
+    return updateObject(state, {
+        shownError: false,
     });
 };
 
@@ -35,9 +42,14 @@ const authSuccess = (state, action) => {
     });
 };
 const authFail = (state, action) => {
-    const { titleError, error } = treatError(action.error);
+
+    const { titleError, error } = action.error !== null ? treatError(action.error) : null;
+    if (action.error === null) {
+        this.titleError = null;
+        this.error = null;
+    }
     console.log('--reducer authFail');
-    console.log(`${titleError}  ${error}`);
+    //console.log(`${titleError}  ${error}`);
     return updateObject(state, {
         error: error,
         titleError: titleError,
@@ -56,6 +68,9 @@ const reducerAuth = (state = initialState, action) => {
 
         case actionTypes.AUTH_FAIL:
             return authFail(state, action);
+
+        case actionTypes.DISABLE_ERROR:
+            return disableError(state, action);
 
         default:
             /* console.log("--reducer");

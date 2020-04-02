@@ -72,7 +72,7 @@ class HomeScreen extends React.Component {
           </Text> */}
           {/* Rest of the app comes ABOVE the action button component !*/}
         </ScrollView>
-        {this.props.id_type_user !== ConstApp.ID_TYPE_CUSTOMER ? null : (
+        {this.props.id_type_user === ConstApp.ID_TYPE_DELIVER ? null : (
           <ActionButton
             buttonColor={Colors.tintColor1}
             onPress={() => this.props.navigation.navigate('AddCourse')}

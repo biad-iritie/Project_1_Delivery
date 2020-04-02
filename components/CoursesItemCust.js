@@ -37,14 +37,14 @@ class CoursesItemCust extends Component {
                             <Text style={styles.type_course}>Course Immediate</Text>
                         </View>
                         <View style={styles.date_container}>
-                            <Text style={styles.date_text}>Publiée le 00/00/0000</Text>
+                            <Text style={styles.date_text}>12/03/2020</Text>
                         </View>
                     </View>
                 </View>
                 <View>
 
                     <TouchableOpacity style={styles.button} onPress={this.Answer_Course}>
-                        <Text > Modifier  </Text>
+                        <Text > Detail </Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button2} onPress={this.Answer_Course}>
                         <Text > Supprimer  </Text>
