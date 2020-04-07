@@ -46,7 +46,7 @@ export const authLogin = (number, password, navigation) => {
         dispatch(authStart());
 
         //console.log(navigation);
-        /* try {
+        try {
             //appel de l api
             AsyncStorage.setItem('token', '143124325454d45354bSX');
             AsyncStorage.setItem('type', JSON.stringify(1));
@@ -62,8 +62,8 @@ export const authLogin = (number, password, navigation) => {
             console.log(error);
 
             dispatch(authFail(error));
-        } */
-        axios
+        }
+        /* axios
             .post(ConstApp.SERVER + 'user/login', {
                 phone: number,
                 password: password,
@@ -107,7 +107,7 @@ export const authLogin = (number, password, navigation) => {
                 //console.log(err);
                 dispatch(authFail(err));
 
-            });
+            }); */
         dispatch(disableError());
     };
 };
