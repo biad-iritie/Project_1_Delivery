@@ -1,8 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-undef */
 import React, { Component } from 'react';
-import { Image, View, StyleSheet, Alert } from 'react-native';
-import { AppStyles } from '../constants/AppStyles';
+import { Image, View, Alert } from 'react-native';
 import Colors from '../constants/Colors';
 import { TextInput } from 'react-native-gesture-handler';
 
@@ -34,7 +33,7 @@ class LoginScreen extends Component {
         //this.setState({ loading: true });
         //const { navigation } = this.props;
         if (!reg_numero.test(number) || password.length < 6) {
-            msg = 'Renseignez convenablement les champs';
+            msg = 'Renseignez convenablement les champs SVP';
             if (password.length < 6 && reg_numero.test(number)) {
                 msg = 'Votre mot de passe doit avoir au moins 6 caractères';
             }

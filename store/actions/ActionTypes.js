@@ -9,3 +9,7 @@ export const START_LAODING = 'START_LAODING';
 export const FETCH_SUCCESS = 'FETCH_SUCCESS';
 export const FETCH_FAIL = 'FETCH_FAIL';
 export const DISABLE_ERROR = 'DISABLE_ERROR';
+export const DELIVERY_PRICE = 'DELIVERY_PRICE';
+export const GET_PLACES = 'GET_PLACES';
+export const FETCH_ADD_UP = 'FETCH_ADD_UP';
+export const FETCH_ADD_DOWN = 'FETCH_ADD_DOWN';

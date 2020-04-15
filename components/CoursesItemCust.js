@@ -6,6 +6,8 @@ import styles from './style/CoursesItem';
 class CoursesItemCust extends Component {
     constructor(props) {
         super(props);
+        console.log(props.courses.place_sender.title);
+
     }
     Answer_Course() {
         alert('okiii');
@@ -16,25 +18,24 @@ class CoursesItemCust extends Component {
             <View style={styles.container}>
                 <View style={styles.container_info}>
                     <View>
-                        <Text style={styles.dep_arriv}>Depart: Adjamé/Paillet </Text>
+                        <Text style={styles.dep_arriv}>Depart: {this.props.courses.place_sender.title} </Text>
                     </View>
                     <View>
                         <Text style={styles.info}>
-                            jndjcn dcjn dkcncsdsdv qwadsd av qfwefsd qwda sfasc qwfqf dkjcd
-                            dsvsdv
+                            {this.props.courses.spec_place_sender}
                         </Text>
                     </View>
                     <View>
-                        <Text style={styles.dep_arriv}>Arrivée: Adjamé/Locodjro </Text>
+                        <Text style={styles.dep_arriv}>Arrivée: {this.props.courses.place_receiver.title} </Text>
                     </View>
                     <View>
                         <Text style={styles.info}>
-                            jndjcn dcjn dkcncsdsdv qwadsdav qfwefsd qwdasfasc qwfqf
+                            {this.props.courses.spec_place_receiver}
                         </Text>
                     </View>
                     <View style={{ flexDirection: 'row', flex: 1 }}>
                         <View>
-                            <Text style={styles.type_course}>Course Immediate</Text>
+                            <Text style={styles.type_course}>{`${this.props.courses.type_course} / ${this.props.courses.type_package}`}</Text>
                         </View>
                         <View style={styles.date_container}>
                             <Text style={styles.date_text}>12/03/2020</Text>

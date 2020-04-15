@@ -13,6 +13,8 @@ export default (styles = StyleSheet.create({
         flexDirection: 'column',
         //justifyContent: 'center',
         //alignItems: 'stretch',
+        paddingTop: 3,
+        paddingBottom: 50,
     },
     developmentModeText: {
         //flexDirection: 'column',
@@ -21,6 +23,7 @@ export default (styles = StyleSheet.create({
         fontSize: 14,
         lineHeight: 19,
         textAlign: 'center',
+        marginTop: 200
     },
     contentContainer: {
         paddingTop: 3,

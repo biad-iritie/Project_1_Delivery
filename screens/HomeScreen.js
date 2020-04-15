@@ -9,6 +9,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  FlatList
 } from 'react-native';
 import { connect } from 'react-redux';
 //import { MonoText } from '../components/StyledText';
@@ -24,7 +25,7 @@ import styles from './styles/Home';
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
+    //console.log(props);
 
     /* this.state = {
       courses: [],
@@ -49,29 +50,43 @@ class HomeScreen extends React.Component {
        title: navigation.getParam('Title', 'Mes courses'),
      };*/
   }
-  _displayLoading() {
-    //console.log(this.state.isLoading);
 
-    if (this.state.isLoading) {
-      return <Loading />;
-    }
-  }
   render() {
+    //console.log(this.props.courses);
+
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView contentContainerStyle={styles.contentContainer}>
-          {this.props.loading ? <Loading /> : null}
-          {this.props.id_type_user === ConstApp.ID_TYPE_CUSTOMER ? (
-            <CoursesItemCust />
-          ) : (
-              <CoursesItem />
-            )}
 
-          {/* <Text style={styles.developmentModeText}>
+        {this.props.loading ? <Loading /> : null}
+        {this.props.id_type_user === ConstApp.ID_TYPE_CUSTOMER && this.props.courses.length !== 0 ? (
+          <FlatList
+            style={styles.list}
+            data={this.props.courses}
+            renderItem={({ item }) =>
+              <CoursesItemCust courses={item} />
+            }
+            keyExtractor={item => item.numero_course}
+
+          />
+        ) : null}
+        {this.props.id_type_user === ConstApp.ID_TYPE_DELIVER && this.props.courses.length !== 0 ? (
+          <FlatList
+            style={styles.list}
+            data={this.props.courses}
+            renderItem={({ item }) =>
+              <CoursesItem courses={item} />
+            }
+            keyExtractor={item => item.numero_course}
+          />
+        ) : null}
+        {this.props.courses.length === 0 ? (
+          <Text style={styles.developmentModeText}>
             Aucune course pour l'instant !
-          </Text> */}
-          {/* Rest of the app comes ABOVE the action button component !*/}
-        </ScrollView>
+          </Text>
+        ) : null}
+
+        {/* Rest of the app comes ABOVE the action button component !*/}
+
         {this.props.id_type_user === ConstApp.ID_TYPE_DELIVER ? null : (
           <ActionButton
             buttonColor={Colors.tintColor1}
@@ -90,7 +105,8 @@ const mapStateToProps = state => ({
   fullName: state.reducerAuth.fullName,
   id_type_user: state.reducerAuth.id_type_user,
   token: state.reducerAuth.token,
-  loading: state.reducerAuth.loading,
+  loading: state.reducerCourses.loading,
+  courses: state.reducerCourses.courses,
 });
 const mapDispatchToProps = dispatch => {
   return {

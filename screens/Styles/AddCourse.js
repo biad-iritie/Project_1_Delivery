@@ -48,7 +48,7 @@ export default (styles = StyleSheet.create({
     modalView: {
         margin: 20,
         backgroundColor: Colors.tintColor2,
-        borderRadius: 20,
+        borderRadius: 10,
         padding: 35,
         alignItems: "center",
         shadowColor: "#000",
@@ -99,6 +99,7 @@ export default (styles = StyleSheet.create({
         fontFamily: AppStyles.fontName.text,
         color: 'red',
     },
+
     InputContainer: {
         //width: AppStyles.textInputWidth.main,
         marginTop: 30,
@@ -106,6 +107,13 @@ export default (styles = StyleSheet.create({
         borderStyle: 'solid',
         borderColor: Colors.grey,
         borderRadius: AppStyles.borderRadius.main,
+    },
+    textSelect: {
+        height: 42,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 10,
+        color: Colors.text,
     },
     body: {
         height: 42,

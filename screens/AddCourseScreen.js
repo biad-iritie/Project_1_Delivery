@@ -2,16 +2,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-    StyleSheet,
     ScrollView,
     Text,
     TouchableOpacity,
-    Picker,
     View,
-    Alert,
-    TouchableHighlight,
     Modal,
-    FlatList
+    FlatList,
+    Alert,
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 //import ModalFilterPicker from 'react-native-modal-filter-picker';
@@ -23,6 +20,7 @@ import { Dropdown } from 'react-native-material-dropdown';
 import * as actions from '../store/actions/Courses';
 import { Accordion, List, NoticeBar, WhiteSpace, Radio, SearchBar } from '@ant-design/react-native';
 import styles from './styles/AddCourse';
+import myAlert from '../components/MyAlert';
 
 const RadioItem = Radio.RadioItem;
 //const who = "";
@@ -44,87 +42,34 @@ class AddCourseScreen extends Component {
             name_receiver: '',
             num_receiver: '',
             type_course: '',
-            price: 1000,
+
             activeSections: [2, 0],
-            part1Value: 1,
-            part2Value: 1,
+            //part1Value: 1,
+            paymentMethod: null, /* Upon receipt of the package : 1 and Upon delivery of the package : 2 */
             modalVisible: false,
-            places: [
-                {
-                    id: '1',
-                    title: 'First Item',
-                    searchKey: 'abidjan',
-                },
-                {
-                    id: '2',
-                    title: 'Second Item',
-                    searchKey: 'abidjan',
-                },
-                {
-                    id: '3',
-                    title: 'Third Item',
-                    searchKey: 'san Pedro',
-                },
-                {
-                    id: '4',
-                    title: 'First Item',
-                    searchKey: 'abidjan',
-                },
-                {
-                    id: '5',
-                    title: 'Second Item',
-                    searchKey: 'abidjan',
-                },
-                {
-                    id: '6',
-                    title: 'Third Item',
-                    searchKey: 'daloa',
-                },
-                {
-                    id: '7',
-                    title: 'First Itemasdkjnasdjnasl',
-                    searchKey: 'daloa',
-                },
-                {
-                    id: '8',
-                    title: 'Second Item',
-                    searchKey: 'daloa'
-                },
-                {
-                    id: '58694a0f-3da1-sdc-bd96-145571e29d72',
-                    title: 'Third Item',
-                    searchKey: 'san Pedro'
-                },
-                {
-                    id: 'bd7acbea-c1b1sdds-46c2-aed5-3ad53abb28ba',
-                    title: 'First Item',
-                    searchKey: 'san Pedro'
-                },
-                {
-                    id: 'sd-c605-48d3-a4f8-fbd91aa97f63',
-                    title: 'Second Item',
-                    searchKey: 'san Pedro'
-                },
-                {
-                    id: 'sddssd-3da1-471f-bd96-145571e29d72',
-                    title: 'Third Item',
-                    searchKey: 'san Pedro'
-                },
-            ],
-            researchValues: []
+            researchValues: [],
+            who: '',
         };
 
         this.onChange = activeSections => {
             this.setState({ activeSections });
         };
         this.addCourse = this.addCourse.bind(this);
+        this.searchDeliveryPrice = this.searchDeliveryPrice.bind(this);
+
 
         this.onCancel = this.onCancel.bind(this);
         this.searchStreet = this.searchStreet.bind(this);
-        this.selectPlace = this.selectPlace.bind(this);
+
+
         //this.item = this.item.bind(this);
         //const count = 0;
+        //console.log(props);
 
+
+    }
+    componentDidMount() {
+        this.props.fetchPlaces();
     }
     /* shouldComponentUpdate() {
         return false
@@ -134,9 +79,43 @@ class AddCourseScreen extends Component {
             title: navigation.getParam('Title', 'Nouvelle course'),
         };
     }; */
+
     addCourse = () => {
-        this.props.addCourse(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        const reg_numero = new RegExp('^[0-9]{8}$');
+        const { type_package, value_package, weight_package, place_sender, spec_place_sender, place_receiver,
+            spec_place_receiver, name_receiver, num_receiver, type_course, paymentMethod } = this.state;
+        const { navigation } = this.props;
+        /* console.log(type_package, value_package, weight_package, place_sender, spec_place_sender, place_receiver,
+            spec_place_receiver, name_receiver, num_receiver, type_course, paymentMethod); */
+        this.props.addCourse(this.props.token, this.props.fullName, this.props.number,
+            type_package, value_package, weight_package, place_sender, spec_place_sender,
+            place_receiver, spec_place_receiver, name_receiver, num_receiver, type_course, paymentMethod, navigation, 'up');
+
+        /* if (type_package == '' || value_package == '' || weight_package == '' || place_sender == '' ||
+            spec_place_sender == '' || place_receiver == '' || spec_place_receiver == '' ||
+            name_receiver == '' || !reg_numero.test(num_receiver) || type_course == '' || paymentMethod == '') {
+
+            Alert.alert('Oups ! Attention', 'Renseignez convenablement les champs SVP');
+            //this.setState({ loading: false })
+        } else {
+            this.props.addCourse(this.props.token, this.props.fullName, this.props.number,
+                type_package, value_package, weight_package, place_sender, spec_place_sender,
+                place_receiver, spec_place_receiver, name_receiver, num_receiver, type_course, paymentMethod, navigation);
+        } */
+
     }
+    searchDeliveryPrice = (place_sender, place_receiver) => {
+        /* console.log('searchDeliveryPrice');
+        console.log(place_sender);
+        console.log(place_receiver);
+ */
+
+        if (place_sender !== '' && place_receiver !== '') {
+
+            this.props.searchDeliveryPrice(place_sender, place_receiver);
+        }
+    }
+
     onCancel = () => {
         this.setState({
             visible: false,
@@ -144,17 +123,9 @@ class AddCourseScreen extends Component {
     }
     setModalVisible = (visible, who) => {
         this.setState({ modalVisible: visible });
-        this.who = who;
+        this.setState({ who: who });
     }
-    selectPlace = (place) => {
 
-
-        console.log("this.state.spec_place_sender");
-        //console.log(this.state.spec_place_sender);
-
-        //this.setModalVisible(false);
-
-    }
     searchStreet = () => {
         //console.log(city);
 
@@ -168,6 +139,7 @@ class AddCourseScreen extends Component {
 
     }
     render() {
+
         let typ_pack = [
             {
                 value: 'Colis',
@@ -186,20 +158,24 @@ class AddCourseScreen extends Component {
             },
         ];
 
-        const DATA = this.state.places;
+        const DATA = this.props.places;
         const { modalVisible } = this.state;
 
         const { loading } = this.state;
+        const who = this.state.who;
         return (
 
             <ScrollView>
+                {this.props.shownError === true && this.props.error !== null
+                    ? myAlert(this.props.titleError, this.props.error)
+                    : null}
                 <Modal
                     animationType="slide"
                     transparent={true}
                     visible={modalVisible}
-                    onRequestClose={() => {
-                        Alert.alert("Modal has been closed.");
-                    }}
+                /* onRequestClose={() => {
+                    Alert.alert("Modal has been closed.");
+                }} */
                 >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
@@ -214,8 +190,10 @@ class AddCourseScreen extends Component {
                                 style={styles.list}
                                 data={DATA}
                                 renderItem={({ item }) =>
-                                    <TouchableOpacity style={styles.viewList} onPress={() => {
-                                        if (this.who === 'sender') {
+                                    <TouchableOpacity style={styles.viewList} onPress={async () => {
+                                        //console.log(who);
+
+                                        if (who === 'sender') {
                                             this.setState({
                                                 place_sender: item,
                                             });
@@ -248,14 +226,7 @@ class AddCourseScreen extends Component {
                         </View>
                     </View>
                 </Modal>
-                <TouchableHighlight
-                    style={styles.openButton}
-                    onPress={() => {
-                        this.setModalVisible(true);
-                    }}
-                >
-                    <Text style={styles.textStyle}>Show Modal</Text>
-                </TouchableOpacity>
+
                 <Accordion onChange={this.onChange} activeSections={this.state.activeSections}>
                     <Accordion.Panel header="Expediteur">
                         <List >
@@ -263,7 +234,7 @@ class AddCourseScreen extends Component {
 
                                 <Dropdown
                                     label="Quel est le genre du colis"
-                                    style={styles.body}
+
                                     onChangeText={text => this.setState({ type_package: text })}
                                     value={this.state.type_package}
                                     placeholderTextColor={Colors.grey}
@@ -304,19 +275,11 @@ class AddCourseScreen extends Component {
                                 />
                             </View>
                             <View style={styles.InputContainer}>
-                                <TextInput
-                                    //numberOfLines="3"
-                                    style={styles.body}
-                                    placeholder="Selectionner votre lieu"
-                                    onFocus={() => {
+                                <Text
+                                    onPress={() => {
                                         this.setModalVisible(true, 'sender')
-                                    }}
-                                    //onChangeText={text => this.setState({ place_sender: text })}
-                                    value={"Abidjan / " + this.state.place_sender.title}
-                                    placeholderTextColor={Colors.grey}
-                                    underlineColorAndroid="transparent"
-                                //editable="false"
-                                />
+                                    }} style={styles.textSelect} > Selectionner votre lieu: {this.state.place_sender.title}
+                                </Text>
                             </View>
                             <View style={styles.InputContainer}>
                                 <TextInput
@@ -338,7 +301,12 @@ class AddCourseScreen extends Component {
                     <Accordion.Panel header="Destinataire">
                         <List>
                             <View style={styles.InputContainer}>
-                                <TextInput
+                                <Text
+                                    onPress={() => {
+                                        this.setModalVisible(true, 'receiver')
+                                    }} style={styles.textSelect} > Selectionner son lieu: {this.state.place_receiver.title}
+                                </Text>
+                                {/* <TextInput
                                     multiline
                                     //numberOfLines="3"
                                     style={styles.body}
@@ -347,26 +315,27 @@ class AddCourseScreen extends Component {
                                     value={this.state.place_receiver}
                                     placeholderTextColor={Colors.grey}
                                     underlineColorAndroid="transparent"
-                                />
+                                /> */}
                             </View>
                             <View style={styles.InputContainer}>
                                 <TextInput
                                     style={styles.specify}
                                     multiline
-                                    placeholder="Donner plus de precision sur la position du recepteur afin de facilité la livraison"
+                                    placeholder="Donner plus de precision sur sa position afin de facilité la livraison"
                                     onChangeText={text =>
                                         this.setState({ spec_place_receiver: text })
                                     }
                                     value={this.state.spec_place_receiver}
                                     placeholderTextColor={Colors.grey}
                                     underlineColorAndroid="transparent"
+                                    onFocus={() => this.searchDeliveryPrice(this.state.place_sender, this.state.place_receiver)}
                                 />
                             </View>
 
                             <View style={styles.InputContainer}>
                                 <TextInput
                                     style={styles.body}
-                                    placeholder="Entrer le nom du recepteur"
+                                    placeholder="Entrer son nom"
                                     onChangeText={text => this.setState({ name_receiver: text })}
                                     value={this.state.name_receiver}
                                     placeholderTextColor={Colors.grey}
@@ -376,7 +345,7 @@ class AddCourseScreen extends Component {
                             <View style={styles.InputContainer}>
                                 <TextInput
                                     style={styles.body}
-                                    placeholder="Entrer le numero du recepteur"
+                                    placeholder="Entrer son numero "
                                     onChangeText={text => this.setState({ num_receiver: text })}
                                     value={this.state.num_receiver}
                                     placeholderTextColor={Colors.grey}
@@ -407,20 +376,20 @@ class AddCourseScreen extends Component {
 
                     <RadioItem
 
-                        checked={this.state.part2Value === 1}
+                        checked={this.state.paymentMethod === 1}
                         onChange={event => {
                             if (event.target.checked) {
-                                this.setState({ part2Value: 1 });
+                                this.setState({ paymentMethod: 1 });
                             }
                         }}
                     >
                         À la reception du colis
                     </RadioItem>
                     <RadioItem
-                        checked={this.state.part2Value === 2}
+                        checked={this.state.paymentMethod === 2}
                         onChange={event => {
                             if (event.target.checked) {
-                                this.setState({ part2Value: 2 });
+                                this.setState({ paymentMethod: 2 });
                             }
                         }}
                     >
@@ -428,7 +397,7 @@ class AddCourseScreen extends Component {
                     </RadioItem>
                 </List>
                 <WhiteSpace size="lg" />
-                {this.state.price === null ? null :
+                {this.props.price === null ? null :
                     <NoticeBar
                         marqueeProps={{
                             loop: true, style: {
@@ -437,7 +406,7 @@ class AddCourseScreen extends Component {
                             }
                         }}
                     >
-                        Frais de la livraison: {this.state.price} FCFA
+                        Frais de la livraison: {this.props.price} FCFA
                     </NoticeBar>
                 }
                 <View style={{ flex: 1, alignItems: 'center', }}>
@@ -464,6 +433,8 @@ const mapStateToProps = state => ({
     error: state.reducerCourses.error,
     titleError: state.reducerCourses.titleError,
     shownError: state.reducerCourses.shownError,
+    price: state.reducerCourses.price,
+    places: state.reducerCourses.places,
 
 });
 const mapDispatchToProps = dispatch => {
@@ -477,7 +448,7 @@ const mapDispatchToProps = dispatch => {
             spec_place_receiver,
             name_receiver,
             num_receiver,
-            type_course, navigation) =>
+            type_course, paymentMethod, navigation, way) =>
             dispatch(actions.addCourse(token, name_sender, number_sender, type_package,
                 value_package,
                 weight_package,
@@ -487,7 +458,10 @@ const mapDispatchToProps = dispatch => {
                 spec_place_receiver,
                 name_receiver,
                 num_receiver,
-                type_course, navigation)),
+                type_course, paymentMethod, navigation, way)),
+        searchDeliveryPrice: (place_sender, place_receiver) =>
+            dispatch(actions.searchDeliveryPrice(place_sender, place_receiver)),
+        fetchPlaces: () => dispatch(actions.fetchPlaces()),
     };
 };
 export default connect(
