@@ -49,11 +49,20 @@ class HomeScreen extends React.Component {
      return {
        title: navigation.getParam('Title', 'Mes courses'),
      };*/
+    this.detail_Course = this.detail_Course.bind(this)
+    this.delete_Course = this.delete_Course.bind(this)
+  }
+  detail_Course = (data) => {
+    //alert('okiii');
+    this.props.navigation.navigate('DetailCourse', { course: data });
+  }
+  delete_Course = () => {
+    alert('okiii');
+    //this.props.navigation.navigate("AnswerCourse")
   }
 
   render() {
     //console.log(this.props.courses);
-
     return (
       <SafeAreaView style={styles.container}>
 
@@ -63,7 +72,7 @@ class HomeScreen extends React.Component {
             style={styles.list}
             data={this.props.courses}
             renderItem={({ item }) =>
-              <CoursesItemCust courses={item} />
+              <CoursesItemCust courses={item} detail_Course={this.detail_Course} delete_Course={this.delete_Course} />
             }
             keyExtractor={item => item.numero_course}
 
@@ -74,7 +83,7 @@ class HomeScreen extends React.Component {
             style={styles.list}
             data={this.props.courses}
             renderItem={({ item }) =>
-              <CoursesItem courses={item} />
+              <CoursesItem courses={item} detail_Course={this.detail_Course} />
             }
             keyExtractor={item => item.numero_course}
           />

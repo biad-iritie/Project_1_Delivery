@@ -14,6 +14,7 @@ import HomeScreen from '../screens/HomeScreen';
 import CoursesOKScreen from '../screens/CoursesOKScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import AddCourseScreen from '../screens/AddCourseScreen';
+import DetailCourseScreen from '../screens/DetailCourseScreen';
 import AnswerCourse from '../screens/AddCourseScreen';
 import Colors from '../constants/Colors';
 
@@ -55,6 +56,11 @@ const HomeStack = () => {
         name="AddCourse"
         component={AddCourseScreen}
         options={{ title: 'Info course' }}
+      />
+      <Stack.Screen
+        name="DetailCourse"
+        component={DetailCourseScreen}
+        options={{ title: 'Detail' }}
       />
       <Stack.Screen name="AnswerCourse" component={AnswerCourse} />
     </Stack.Navigator>

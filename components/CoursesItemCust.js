@@ -6,13 +6,12 @@ import styles from './style/CoursesItem';
 class CoursesItemCust extends Component {
     constructor(props) {
         super(props);
-        console.log(props.courses.place_sender.title);
+        //console.log(props);
+
+
 
     }
-    Answer_Course() {
-        alert('okiii');
-        //this.props.navigation.navigate("AnswerCourse")
-    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -21,7 +20,7 @@ class CoursesItemCust extends Component {
                         <Text style={styles.dep_arriv}>Depart: {this.props.courses.place_sender.title} </Text>
                     </View>
                     <View>
-                        <Text style={styles.info}>
+                        <Text style={styles.info} numberOfLines={1}>
                             {this.props.courses.spec_place_sender}
                         </Text>
                     </View>
@@ -29,7 +28,7 @@ class CoursesItemCust extends Component {
                         <Text style={styles.dep_arriv}>Arrivée: {this.props.courses.place_receiver.title} </Text>
                     </View>
                     <View>
-                        <Text style={styles.info}>
+                        <Text style={styles.info} numberOfLines={1}>
                             {this.props.courses.spec_place_receiver}
                         </Text>
                     </View>
@@ -44,10 +43,10 @@ class CoursesItemCust extends Component {
                 </View>
                 <View>
 
-                    <TouchableOpacity style={styles.button} onPress={this.Answer_Course}>
+                    <TouchableOpacity style={styles.button} onPress={() => this.props.detail_Course(this.props.courses)}>
                         <Text > Detail </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button2} onPress={this.Answer_Course}>
+                    <TouchableOpacity style={styles.button2} onPress={() => this.props.delete_Course()} >
                         <Text > Supprimer  </Text>
                     </TouchableOpacity>
                 </View>

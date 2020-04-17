@@ -8,7 +8,6 @@ import {
     View,
     Modal,
     FlatList,
-    Alert,
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 //import ModalFilterPicker from 'react-native-modal-filter-picker';
