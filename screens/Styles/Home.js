@@ -15,6 +15,12 @@ export default (styles = StyleSheet.create({
         //alignItems: 'stretch',
         paddingTop: 3,
         paddingBottom: 50,
+
+
+    },
+    list: {
+        marginLeft: 5,
+        marginRight: 5,
     },
     developmentModeText: {
         //flexDirection: 'column',

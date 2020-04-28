@@ -99,10 +99,14 @@ export default (styles = StyleSheet.create({
         fontFamily: AppStyles.fontName.text,
         color: 'red',
     },
-
+    listInput: {
+        marginLeft: 5,
+        marginRight: 5,
+    },
     InputContainer: {
         //width: AppStyles.textInputWidth.main,
-        marginTop: 30,
+        marginTop: 7.5,
+        marginBottom: 7.5,
         borderWidth: 1,
         borderStyle: 'solid',
         borderColor: Colors.grey,
@@ -122,7 +126,7 @@ export default (styles = StyleSheet.create({
         color: Colors.text,
     },
     specify: {
-        height: 100,
+        //height: 100,
         paddingLeft: 20,
         paddingRight: 20,
         color: Colors.text,

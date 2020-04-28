@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import styles from './style/CoursesItem';
 
-class CoursesItemCust extends Component {
+class MycoursesItem extends Component {
     constructor(props) {
         super(props);
         //console.log(props);
@@ -19,6 +19,7 @@ class CoursesItemCust extends Component {
                     <TouchableOpacity onPress={() => this.props.detail_Course(this.props.courses)}>
                         <View>
                             <Text style={styles.dep_arriv}>Depart: {this.props.courses.place_sender.name} </Text>
+
                         </View>
                         <View>
                             <Text style={styles.info} numberOfLines={1}>
@@ -42,17 +43,14 @@ class CoursesItemCust extends Component {
                             </View>
                         </View>
                     </TouchableOpacity>
-
-
-
                 </View>
                 <View>
 
-                    {/* <TouchableOpacity style={styles.button} onPress={() => this.props.detail_Course(this.props.courses)}>
-                        <Text > Detail </Text>
-                    </TouchableOpacity> */}
-                    {/* <TouchableOpacity style={styles.button2} onPress={() => this.props.delete_Course()} >
-                        <Text > Supprimer  </Text>
+                    <TouchableOpacity disabled={false} style={styles.status} onPress={() => console.log("ok")}>
+                        <Text > Terminée </Text>
+                    </TouchableOpacity>
+                    {/* <TouchableOpacity style={styles.button2} onPress={() => console.log("ok")} >
+                        <Text > Detail  </Text>
                     </TouchableOpacity> */}
                 </View>
             </View >
@@ -61,4 +59,4 @@ class CoursesItemCust extends Component {
 }
 
 
-export default CoursesItemCust;
+export default MycoursesItem;

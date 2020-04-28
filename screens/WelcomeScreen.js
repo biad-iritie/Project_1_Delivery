@@ -1,10 +1,11 @@
 /* eslint-disable prettier/prettier */
 import React, { Component } from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, View, Image, Alert } from 'react-native';
 
 import MyButton from '../components/MyButton';
 import ConstApp from '../constants/ConstApp';
 import styles from './styles/Welcome';
+import Colors from '../constants/Colors'
 
 class WelcomeScreen extends Component {
     constructor(props) {
@@ -20,7 +21,23 @@ class WelcomeScreen extends Component {
 
     login = () => {
         /* Login */
-        this.props.navigation.navigate('LoginScreen');
+        Alert.alert(
+            "Voulez-vous vous connecter en tant que : ",
+            "",
+            [
+                {
+                    text: "CLIENT",
+                    onPress: () => this.props.navigation.navigate('LoginScreen', { who: ConstApp.ID_TYPE_CUSTOMER })
+                },
+                {
+                    text: "LIVREUR",
+                    onPress: () => this.props.navigation.navigate('LoginScreen', { who: ConstApp.ID_TYPE_DELIVER }),
+                    //style: "cancel"
+                },
+            ],
+            { cancelable: true }
+        );
+        //this.props.navigation.navigate('LoginScreen');
     };
 
     signIn = () => {

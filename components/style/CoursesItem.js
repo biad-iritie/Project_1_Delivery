@@ -37,13 +37,13 @@ export default (styles = StyleSheet.create({
         backgroundColor: Colors.tintColor1,
 
     },
-    button2: {
+    status: {
         flex: 1,
         padding: 15,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: Colors.tintColor1,
-        borderTopWidth: 3,
+        //borderTopWidth: 3,
         borderTopColor: Colors.tintColor2,
 
     },

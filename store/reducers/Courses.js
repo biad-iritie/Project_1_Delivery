@@ -5,7 +5,9 @@ import treatError from '../../components/TreatError';
 
 const initialState = {
     loading: false,
-    courses: [],
+    courses: [{ "name_receiver": "Bah Alain", "name_sender": "BIAD", "num_receiver": "03438844", "number_sender": "12345678", "numero_course": "034388shxb4", "paymentMethod": 1, "place_receiver": { "createdAt": "2020-04-21T00:00:00.000Z", "id": 2, "name": "Abobo", "quartiers": [Array], "updatedAt": "2020-04-21T00:00:00.000Z", "ville_id": 1 }, "place_sender": { "createdAt": "2020-04-21T00:00:00.000Z", "id": 1, "name": "Adjamé", "quartiers": [Array], "updatedAt": "2020-04-21T00:00:00.000Z", "ville_id": 1 }, "spec_place_receiver": "kewhbjdkwe wekhbfdjehwfb wejhfwjhef wejhfwjehf jwehfjwhef ejwfh wejhf efjhef qjwhvdqjhwvd qjwdvjqhwdv qjwhdqjwhdv qjwdjqvwd qjvqjwd qwjdhvqwdh qwjdhvqjwhd wjdhvqjwhd ", "spec_place_sender": "wdkwkc kjhcbqwe ckhebc cwjehfbwehjb jehcwjhef qwejdhvqwduyqw dqwvduyqwdhqwd qwdyw dqwyvdyqwdb", "type_course": "Normale", "type_package": "Colis", "value_package": "20000", "weight_package": "1" },
+    { "name_receiver": "Bah Alain", "name_sender": "BIAD", "num_receiver": "03438844", "number_sender": "12345678", "numero_course": "03438844", "paymentMethod": 1, "place_receiver": { "createdAt": "2020-04-21T00:00:00.000Z", "id": 2, "name": "Abobo", "quartiers": [Array], "updatedAt": "2020-04-21T00:00:00.000Z", "ville_id": 1 }, "place_sender": { "createdAt": "2020-04-21T00:00:00.000Z", "id": 1, "name": "Adjamé", "quartiers": [Array], "updatedAt": "2020-04-21T00:00:00.000Z", "ville_id": 1 }, "spec_place_receiver": "kewhbjdkwe wekhbfdjehwfb wejhfwjhef wejhfwjehf jwehfjwhef ejwfh wejhf efjhef qjwhvdqjhwvd qjwdvjqhwdv qjwhdqjwhdv qjwdjqvwd qjvqjwd qwjdhvqwdh qwjdhvqjwhd wjdhvqjwhd ", "spec_place_sender": "wdkwkc kjhcbqwe ckhebc cwjehfbwehjb jehcwjhef qwejdhvqwduyqw dqwvduyqwdhqwd qwdyw dqwyvdyqwdb", "type_course": "Normale", "type_package": "Colis", "value_package": "20000", "weight_package": "1" }],
+    myCourses: [{ "name_receiver": "Bah Alain", "name_sender": "BIAD", "num_receiver": "03438844", "number_sender": "12345678", "numero_course": "03438844", "paymentMethod": 1, "place_receiver": { "createdAt": "2020-04-21T00:00:00.000Z", "id": 2, "name": "Abobo", "quartiers": [Array], "updatedAt": "2020-04-21T00:00:00.000Z", "ville_id": 1 }, "place_sender": { "createdAt": "2020-04-21T00:00:00.000Z", "id": 1, "name": "Adjamé", "quartiers": [Array], "updatedAt": "2020-04-21T00:00:00.000Z", "ville_id": 1 }, "spec_place_receiver": "kewhbjdkwe wekhbfdjehwfb wejhfwjhef wejhfwjehf jwehfjwhef ejwfh wejhf efjhef qjwhvdqjhwvd qjwdvjqhwdv qjwhdqjwhdv qjwdjqvwd qjvqjwd qwjdhvqwdh qwjdhvqjwhd wjdhvqjwhd ", "spec_place_sender": "wdkwkc kjhcbqwe ckhebc cwjehfbwehjb jehcwjhef qwejdhvqwduyqw dqwvduyqwdhqwd qwdyw dqwyvdyqwdb", "type_course": "Normale", "type_package": "Colis", "value_package": "20000", "weight_package": "1" }],
     error: null,
     titleError: null,
     shownError: false,
@@ -36,9 +38,10 @@ const fetchSuccess = (state, action) => {
 };
 const fetchAddUp = (state, action) => {
     //console.log('reducer');
+    //console.log(action);
 
     return {
-        courses: [...action.courses, ...state.courses],
+        courses: [...action.course, ...state.courses],
         error: null,
         loading: false,
     }
@@ -47,7 +50,7 @@ const fetchAddDown = (state, action) => {
     //console.log('reducer');
 
     return updateObject(state, {
-        courses: action.courses,
+        courses: [...state.courses, ...action.courses],
         error: null,
         loading: false,
     });
@@ -79,6 +82,14 @@ const deliveryPrice = (state, action) => {
         price: action.price,
     });
 };
+const deleteCourse = (state, action) => {
+
+    return updateObject(state, {
+        courses: state.courses.filter(course => course.numero_course !== action.numero_course),
+        error: null,
+        loading: false,
+    });
+};
 const reducerCourses = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.START_LAODING:
@@ -99,6 +110,9 @@ const reducerCourses = (state = initialState, action) => {
             return fetchAddDown(state, action);
         case actionTypes.FETCH_ADD_UP:
             return fetchAddUp(state, action);
+        case actionTypes.DELETE_COURSE_SUCCESS:
+            return deleteCourse(state, action);
+
 
         default:
             /* console.log("--reducer");

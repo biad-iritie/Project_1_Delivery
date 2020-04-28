@@ -11,7 +11,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import CoursesOKScreen from '../screens/CoursesOKScreen';
+import MyCoursesScreen from '../screens/MyCoursesScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import AddCourseScreen from '../screens/AddCourseScreen';
 import DetailCourseScreen from '../screens/DetailCourseScreen';
@@ -86,16 +86,25 @@ const HomeStack = () => {
   config,
 );
  */
-const CoursesOKStack = () => {
+const MyCourses = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Courses"
+      initialRouteName="MyCourses"
       screenOptions={{
         headerTitleAlign: 'center',
         headerTintColor: Colors.tintColor1,
       }}
     >
-      <Stack.Screen name="Courses" component={CoursesOKScreen} />
+      <Stack.Screen
+        name="MyCourses"
+        component={MyCoursesScreen}
+        options={{ title: 'Mes courses' }}
+      />
+      <Stack.Screen
+        name="DetailCourse"
+        component={DetailCourseScreen}
+        options={{ title: 'Detail' }}
+      />
     </Stack.Navigator>
   );
 };
@@ -160,7 +169,7 @@ const tabNavigator = () => {
             case 'Accueil':
               iconName = Platform.OS === 'ios' ? 'ios-home' : 'md-home';
               break;
-            case 'Courses':
+            case 'Mes Courses':
               iconName = focused ? 'ios-list' : 'md-list';
               break;
             case 'Info':
@@ -180,7 +189,7 @@ const tabNavigator = () => {
       }}
     >
       <Tab.Screen name="Accueil" component={HomeStack} />
-      <Tab.Screen name="Courses" component={CoursesOKStack} />
+      <Tab.Screen name="Mes Courses" component={MyCourses} />
       <Tab.Screen name="Info" component={SettingsStack} />
     </Tab.Navigator>
   );

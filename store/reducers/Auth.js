@@ -42,7 +42,7 @@ const authSuccess = (state, action) => {
     });
 };
 const authFail = (state, action) => {
-
+    console.log(action);
     const { titleError, error } = action.error !== null ? treatError(action.error) : null;
     if (action.error === null) {
         this.titleError = null;

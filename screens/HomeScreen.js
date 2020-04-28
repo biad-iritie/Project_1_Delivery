@@ -2,18 +2,14 @@
 //import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import {
-  Image,
   SafeAreaView,
-  ScrollView,
-  StyleSheet,
   Text,
-  TouchableOpacity,
-  View,
   FlatList
 } from 'react-native';
 import { connect } from 'react-redux';
 //import { MonoText } from '../components/StyledText';
 import ActionButton from 'react-native-action-button';
+import * as actions from '../store/actions/Courses';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../constants/Colors';
 import CoursesItem from '../components/CoursesItem';
@@ -21,11 +17,12 @@ import CoursesItemCust from '../components/CoursesItemCust';
 import Loading from '../components/Loading';
 import ConstApp from '../constants/ConstApp';
 import styles from './styles/Home';
+import myAlert from '../components/MyAlert';
 
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
-    //console.log(props);
+    console.log(props);
 
     /* this.state = {
       courses: [],
@@ -50,23 +47,27 @@ class HomeScreen extends React.Component {
        title: navigation.getParam('Title', 'Mes courses'),
      };*/
     this.detail_Course = this.detail_Course.bind(this)
-    this.delete_Course = this.delete_Course.bind(this)
+
+  }
+  componentDidMount() {
+    //this.props.listCourse(this.props.id_type_user);
   }
   detail_Course = (data) => {
     //alert('okiii');
     this.props.navigation.navigate('DetailCourse', { course: data });
   }
-  delete_Course = () => {
-    alert('okiii');
-    //this.props.navigation.navigate("AnswerCourse")
-  }
+
 
   render() {
-    //console.log(this.props.courses);
+    console.log(this.props.courses);
+    console.log("Home");
     return (
       <SafeAreaView style={styles.container}>
 
         {this.props.loading ? <Loading /> : null}
+        {this.props.shownError === true && this.props.error !== null
+          ? myAlert(this.props.titleError, this.props.error)
+          : null}
         {this.props.id_type_user === ConstApp.ID_TYPE_CUSTOMER && this.props.courses.length !== 0 ? (
           <FlatList
             style={styles.list}
@@ -74,7 +75,7 @@ class HomeScreen extends React.Component {
             renderItem={({ item }) =>
               <CoursesItemCust courses={item} detail_Course={this.detail_Course} delete_Course={this.delete_Course} />
             }
-            keyExtractor={item => item.numero_course}
+            keyExtractor={item => item.numero_course.toString()}
 
           />
         ) : null}
@@ -85,7 +86,7 @@ class HomeScreen extends React.Component {
             renderItem={({ item }) =>
               <CoursesItem courses={item} detail_Course={this.detail_Course} />
             }
-            keyExtractor={item => item.numero_course}
+            keyExtractor={item => item.numero_course.toString()}
           />
         ) : null}
         {this.props.courses.length === 0 ? (
@@ -113,15 +114,14 @@ const mapStateToProps = state => ({
   number: state.reducerAuth.number,
   fullName: state.reducerAuth.fullName,
   id_type_user: state.reducerAuth.id_type_user,
+  shownError: state.reducerCourses.shownError,
   token: state.reducerAuth.token,
   loading: state.reducerCourses.loading,
   courses: state.reducerCourses.courses,
 });
 const mapDispatchToProps = dispatch => {
   return {
-    dispatch: action => {
-      dispatch(action);
-    },
+    listCourse: (id_type_user) => dispatch(actions.listCourse(id_type_user)),
   };
 };
 export default connect(

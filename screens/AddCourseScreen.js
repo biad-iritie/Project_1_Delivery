@@ -41,7 +41,7 @@ class AddCourseScreen extends Component {
             name_receiver: '',
             num_receiver: '',
             type_course: '',
-
+            libelle_package: '',
             activeSections: [2, 0],
             //part1Value: 1,
             paymentMethod: null, /* Upon receipt of the package : 1 and Upon delivery of the package : 2 */
@@ -63,7 +63,7 @@ class AddCourseScreen extends Component {
 
         //this.item = this.item.bind(this);
         //const count = 0;
-        //console.log(props);
+        console.log(props);
 
 
     }
@@ -90,7 +90,7 @@ class AddCourseScreen extends Component {
             type_package, value_package, weight_package, place_sender, spec_place_sender,
             place_receiver, spec_place_receiver, name_receiver, num_receiver, type_course, paymentMethod, navigation, 'up');
 
-        /* if (type_package == '' || value_package == '' || weight_package == '' || place_sender == '' ||
+        /* if (type_package == '' || value_package == '' || place_sender == '' ||
             spec_place_sender == '' || place_receiver == '' || spec_place_receiver == '' ||
             name_receiver == '' || !reg_numero.test(num_receiver) || type_course == '' || paymentMethod == '') {
 
@@ -150,18 +150,20 @@ class AddCourseScreen extends Component {
 
         let typ_course = [
             {
-                value: 'Immediate',
+                value: 'Normale',
             },
             {
-                value: 'Lendemain',
+                value: 'Importante',
             },
         ];
 
         const DATA = this.props.places;
         const { modalVisible } = this.state;
 
-        const { loading } = this.state;
+        //const { loading } = this.state;
         const who = this.state.who;
+        //console.log(DATA);
+
         return (
 
             <ScrollView>
@@ -205,10 +207,10 @@ class AddCourseScreen extends Component {
                                         //console.log(this.state.place_sender);
 
                                     }}>
-                                        <Text style={styles.textList} > {item.title}</Text>
+                                        <Text style={styles.textList} > {item.name}</Text>
                                     </TouchableOpacity>
                                 }
-                                keyExtractor={item => item.id}
+                                keyExtractor={item => item.id.toString()}
 
                             />
 
@@ -228,7 +230,8 @@ class AddCourseScreen extends Component {
 
                 <Accordion onChange={this.onChange} activeSections={this.state.activeSections}>
                     <Accordion.Panel header="Expediteur">
-                        <List >
+
+                        <List style={styles.listInput}>
                             <View style={styles.InputContainer}>
 
                                 <Dropdown
@@ -239,6 +242,7 @@ class AddCourseScreen extends Component {
                                     placeholderTextColor={Colors.grey}
                                     underlineColorAndroid="transparent"
                                     data={typ_pack}
+                                //style={styles.textSelect}
                                 />
                                 {/*<Picker
                                     style={styles.body}
@@ -253,12 +257,22 @@ class AddCourseScreen extends Component {
                             <View style={styles.InputContainer}>
                                 <TextInput
                                     style={styles.body}
-                                    placeholder="Quel la valeur approx du colis"
+                                    placeholder="Quelle est la valeur net du colis"
                                     onChangeText={text => this.setState({ value_package: text })}
                                     value={this.state.value_package}
                                     placeholderTextColor={Colors.grey}
                                     underlineColorAndroid="transparent"
                                     keyboardType="numeric"
+                                />
+                            </View>
+                            <View style={styles.InputContainer}>
+                                <TextInput
+                                    style={styles.body}
+                                    placeholder="Quel est le libellé du colis"
+                                    onChangeText={text => this.setState({ libelle_package: text })}
+                                    value={this.state.libelle_package}
+                                    placeholderTextColor={Colors.grey}
+                                    underlineColorAndroid="transparent"
                                 />
                             </View>
 
@@ -276,8 +290,8 @@ class AddCourseScreen extends Component {
                             <View style={styles.InputContainer}>
                                 <Text
                                     onPress={() => {
-                                        this.setModalVisible(true, 'sender')
-                                    }} style={styles.textSelect} > Selectionner votre lieu: {this.state.place_sender.title}
+                                        this.setModalVisible(true, 'sender');
+                                    }} style={styles.textSelect} > Selectionner la commune de votre position: {this.state.place_sender.name}
                                 </Text>
                             </View>
                             <View style={styles.InputContainer}>
@@ -298,12 +312,12 @@ class AddCourseScreen extends Component {
                     </Accordion.Panel>
 
                     <Accordion.Panel header="Destinataire">
-                        <List>
+                        <List style={styles.listInput}>
                             <View style={styles.InputContainer}>
                                 <Text
                                     onPress={() => {
-                                        this.setModalVisible(true, 'receiver')
-                                    }} style={styles.textSelect} > Selectionner son lieu: {this.state.place_receiver.title}
+                                        this.setModalVisible(true, 'receiver');
+                                    }} style={styles.textSelect} > Selectionner la commune de sa position: {this.state.place_receiver.name}
                                 </Text>
                                 {/* <TextInput
                                     multiline

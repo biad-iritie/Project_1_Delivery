@@ -13,21 +13,24 @@ import styles from './styles/Form';
 import myAlert from '../components/MyAlert';
 
 class LoginScreen extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             number: '',
             password: '',
+            who: props.route.params.who,
         };
 
         this.onPressLogin = this.onPressLogin.bind(this);
+        //console.log(this.state);
+
     }
 
     onPressLogin = () => {
         //console.log(this.props);
         const reg_numero = new RegExp('^[0-9]{8}$');
-        const { number, password } = this.state;
+        const { number, password, who } = this.state;
         const { navigation } = this.props;
         //console.log(this.state);
         //this.setState({ loading: true });
@@ -42,14 +45,14 @@ class LoginScreen extends Component {
         } else {
             //this.setState({ loading: false });
             //appel de l api
-            this.props.onAuth(number, password, navigation);
+            this.props.onAuth(who, number, password, navigation);
             //navigation.navigate('Main')
         }
     };
 
     render() {
         //const { loading } = this.state;
-        console.log(this.props);
+        //console.log(this.props);
 
         return (
             <View style={styles.container}>
@@ -121,8 +124,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (number, password, navigation) =>
-            dispatch(actions.authLogin(number, password, navigation)),
+        onAuth: (who, number, password, navigation) =>
+            dispatch(actions.authLogin(who, number, password, navigation)),
     };
 };
 

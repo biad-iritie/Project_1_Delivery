@@ -51,5 +51,5 @@ export default (styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
     },
-    info: { height: 42 },
+    info: { marginBottom: 10 },
 }));

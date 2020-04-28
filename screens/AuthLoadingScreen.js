@@ -26,10 +26,7 @@ class AuthLoadingScreen extends React.Component {
       const number = await AsyncStorage.getItem('number');
       const email = await AsyncStorage.getItem('email');
       const fullName = await AsyncStorage.getItem('fullName');
-      console.log('--Check User dans AuthLoading--');
-      console.log(
-        number + ' ' + type + ' ' + number + ' ' + email + ' ' + fullName,
-      );
+      //console.log('--Check User dans AuthLoading--');
       if (
         (token !== null) &
         (type !== null) &
