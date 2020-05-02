@@ -118,6 +118,91 @@ export const authLogin = (who, number, password, navigation) => {
 
     };
 };
+const logOut = () => {
+    return {
+        type: actionTypes.LOGOUT,
+    };
+};
+export const authLogOut = (token, navigation) => {
+    return dispatch => {
+        dispatch(authStart());
+
+        //console.log(navigation);
+        try {
+            //appel de l api
+            AsyncStorage.removeItem('token');
+            AsyncStorage.removeItem('type');
+            AsyncStorage.removeItem('number');
+            AsyncStorage.removeItem('email');
+            AsyncStorage.removeItem('fullName');
+
+            dispatch(logOut());
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Welcome' }],
+            });
+            //navigation.navigate('Welcome');
+        } catch (error) {
+            // Error saving data
+            console.log(error);
+
+            dispatch(authFail(error));
+        }
+
+        /* axios
+            .post(ConstApp.SERVER + 'user/login', {
+                phone: number,
+                password: password,
+            })
+            .then(res => {
+                console.log(res.data);
+                if (res.data.code === 1) {
+                    const token = res.data.token;
+                    const name = res.data.data.name;
+                    const email = res.data.data.email;
+                    //console.log("Local storage");
+
+                    try {
+                        //ADD the information on Local storage
+                        AsyncStorage.setItem('token', token);
+                        AsyncStorage.setItem('type', who);
+                        AsyncStorage.setItem('number', number);
+                        AsyncStorage.setItem('email', email);
+                        AsyncStorage.setItem('fullName', name);
+
+                        dispatch(
+                            authSuccess(
+                                token,
+                                who,
+                                number,
+                                name,
+                                email,
+                            ),
+                        );
+
+                        navigation.navigate('Main');
+                    } catch (error) {
+                        console.log('Local storage');
+                        console.log(error);
+                        dispatch(authFail(error));
+                    }
+                }
+                else {
+                    console.log('res.data.status == 0');
+
+                    dispatch(authFail(res.data.message));
+                }
+                dispatch(disableError());
+            })
+            .catch(err => {
+                console.log('error catch');
+                //console.log(err);
+                dispatch(authFail(err));
+                dispatch(disableError());
+            }); */
+
+    };
+};
 
 export const authSignUp = (
     number,

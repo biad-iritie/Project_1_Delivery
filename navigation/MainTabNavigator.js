@@ -1,14 +1,13 @@
 import React from 'react';
-import { Platform } from 'react-native';
 /* import {
   createStackNavigator,
   createBottomTabNavigator,
 } from '@react-navigation/stack';
  */
-import { connect } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+//import Ionicons from 'react-native-vector-icons/Ionicons';
+import { IconOutline } from '@ant-design/icons-react-native';
 //import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import MyCoursesScreen from '../screens/MyCoursesScreen';
@@ -17,7 +16,7 @@ import AddCourseScreen from '../screens/AddCourseScreen';
 import DetailCourseScreen from '../screens/DetailCourseScreen';
 import AnswerCourse from '../screens/AddCourseScreen';
 import Colors from '../constants/Colors';
-
+import { useNavigation } from '@react-navigation/native';
 const Stack = createStackNavigator();
 
 const Tab = createBottomTabNavigator();
@@ -127,7 +126,9 @@ const MyCourses = () => {
   },
   config,
 ); */
+
 const SettingsStack = () => {
+  const navigation = useNavigation();
   return (
     <Stack.Navigator
       initialRouteName="SettingsScreen"
@@ -136,7 +137,13 @@ const SettingsStack = () => {
         headerTintColor: Colors.tintColor1,
       }}
     >
-      <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
+      <Stack.Screen
+        name="SettingsScreen"
+        component={SettingsScreen}
+        options={{
+          title: 'Profile',
+        }}
+      />
     </Stack.Navigator>
   );
 };
@@ -167,20 +174,22 @@ const tabNavigator = () => {
           //console.log(size);
           switch (route.name) {
             case 'Accueil':
-              iconName = Platform.OS === 'ios' ? 'ios-home' : 'md-home';
+              iconName = 'global';
               break;
             case 'Mes Courses':
-              iconName = focused ? 'ios-list' : 'md-list';
+              iconName = focused ? 'ordered-list' : 'unordered-list';
               break;
-            case 'Info':
-              iconName = Platform.OS === 'ios' ? 'ios-options' : 'md-options';
+            case 'Profil':
+              iconName = 'user';
               break;
             default:
               break;
           }
 
           // You can return any component that you like here!
-          return <Ionicons name={iconName} size={size} color={color} />;
+          return <IconOutline name={iconName} size={size} color={color} />;
+          //return <IconFill name={iconName} size={size} color={color} />;
+          //return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}
       tabBarOptions={{
@@ -190,18 +199,11 @@ const tabNavigator = () => {
     >
       <Tab.Screen name="Accueil" component={HomeStack} />
       <Tab.Screen name="Mes Courses" component={MyCourses} />
-      <Tab.Screen name="Info" component={SettingsStack} />
+      <Tab.Screen name="Profil" component={SettingsStack} />
     </Tab.Navigator>
   );
 };
 
 tabNavigator.path = '';
 
-const mapStateToProps = state => ({
-  number: state.reducerAuth.number,
-  fullName: state.reducerAuth.fullName,
-  id_type_user: state.reducerAuth.id_type_user,
-  token: state.reducerAuth.token,
-  loading: state.reducerAuth.loading,
-});
-export default connect(mapStateToProps)(tabNavigator);
+export default tabNavigator;

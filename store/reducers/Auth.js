@@ -2,14 +2,15 @@
 import * as actionTypes from '../actions/ActionTypes';
 import { updateObject } from '../utility';
 import treatError from '../../components/TreatError';
-import ConstApp from '../../constants/ConstApp';
+//import ConstApp from '../../constants/ConstApp';
 const initialState = {
     loading: false,
     numero: '',
     fullName: '',
     email: '',
     token: '',
-    id_type_user: ConstApp.ID_TYPE_CUSTOMER,
+    //id_type_user: ConstApp.ID_TYPE_CUSTOMER,
+    id_type_user: '',
     error: null,
     titleError: null,
     shownError: false,
@@ -26,6 +27,9 @@ const disableError = (state, action) => {
     return updateObject(state, {
         shownError: false,
     });
+};
+const logOut = (state) => {
+    return updateObject(state, initialState);
 };
 
 const authSuccess = (state, action) => {
@@ -71,7 +75,8 @@ const reducerAuth = (state = initialState, action) => {
 
         case actionTypes.DISABLE_ERROR:
             return disableError(state, action);
-
+        case actionTypes.LOGOUT:
+            return logOut(state, action);
         default:
             /* console.log("--reducer");
                         console.log(state); */

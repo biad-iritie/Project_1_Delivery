@@ -4,13 +4,14 @@ import React from 'react';
 import {
   SafeAreaView,
   Text,
-  FlatList
+  FlatList,
 } from 'react-native';
 import { connect } from 'react-redux';
 //import { MonoText } from '../components/StyledText';
 import ActionButton from 'react-native-action-button';
 import * as actions from '../store/actions/Courses';
-import Icon from 'react-native-vector-icons/Ionicons';
+//import Icon from 'react-native-vector-icons/Ionicons';
+//import { IconFill, IconOutline } from '@ant-design/icons-react-native';
 import Colors from '../constants/Colors';
 import CoursesItem from '../components/CoursesItem';
 import CoursesItemCust from '../components/CoursesItemCust';
@@ -46,7 +47,7 @@ class HomeScreen extends React.Component {
      return {
        title: navigation.getParam('Title', 'Mes courses'),
      };*/
-    this.detail_Course = this.detail_Course.bind(this)
+    this.detail_Course = this.detail_Course.bind(this);
 
   }
   componentDidMount() {
@@ -60,7 +61,7 @@ class HomeScreen extends React.Component {
 
   render() {
     console.log(this.props.courses);
-    console.log("Home");
+    console.log('Home');
     return (
       <SafeAreaView style={styles.container}>
 
@@ -101,9 +102,7 @@ class HomeScreen extends React.Component {
           <ActionButton
             buttonColor={Colors.tintColor1}
             onPress={() => this.props.navigation.navigate('AddCourse')}
-          >
-            <Icon name="md-create" style={styles.actionButtonIcon} />
-          </ActionButton>
+          />
         )}
       </SafeAreaView>
     );
