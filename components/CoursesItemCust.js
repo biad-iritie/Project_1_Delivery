@@ -46,15 +46,7 @@ class CoursesItemCust extends Component {
 
 
                 </View>
-                <View>
 
-                    {/* <TouchableOpacity style={styles.button} onPress={() => this.props.detail_Course(this.props.courses)}>
-                        <Text > Detail </Text>
-                    </TouchableOpacity> */}
-                    {/* <TouchableOpacity style={styles.button2} onPress={() => this.props.delete_Course()} >
-                        <Text > Supprimer  </Text>
-                    </TouchableOpacity> */}
-                </View>
             </View >
         );
     }

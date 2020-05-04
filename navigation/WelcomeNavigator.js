@@ -1,9 +1,8 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 //import { createStackNavigator } from 'react-navigation';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { AppStyles } from '../constants/AppStyles';
+
 
 import WelcomeScreen from '../screens/WelcomeScreen';
 import LoginScreen from '../screens/LoginScreen';
@@ -77,15 +76,4 @@ const WelcomeNavigator = () => {
   },
   {},
 );*/
-const styles = StyleSheet.create({
-  headerTitleStyle: {
-    fontWeight: 'bold',
-    textAlign: 'center',
-    alignSelf: 'center',
-    color: 'black',
-    flex: 1,
-    fontFamily: AppStyles.fontName.main,
-  },
-});
-
 export default WelcomeNavigator;

@@ -1,4 +1,3 @@
-import { Platform, StyleSheet } from 'react-native';
 const numColumns = 2;
 
 export const AppStyles = {

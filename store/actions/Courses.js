@@ -30,8 +30,35 @@ const fetchAddUp = (course) => {
         course: course,
     };
 };
+const changeStatus = (data) => {
+    return {
+        type: actionTypes.CHANGE_STATUS,
+        data: data,
+    };
+};
+export const changingStatus = (token, numero_course, status) => {
+    //alert('ok')
+    return dispatch => {
+        //alert('ok')
+        dispatch(startLoading());
+        /* axios
+            .post(ConstApp.SERVER + '', {
 
 
+            })
+            .then(res => {
+                dispatch(fetchSuccess({}));
+            })
+            .catch(err => {
+                console.error(err);
+                dispatch(fetchFail(err));
+            }) */
+        dispatch(changeStatus({ numero_course, status }));
+        //dispatch(disableError())
+        //navigation.goBack();
+        //dispatch(disableError());
+    };
+};
 const getplaces = (places) => {
     return {
         type: actionTypes.GET_PLACES,
@@ -59,66 +86,6 @@ const deliveryPrice = price => {
 export const fetchPlaces = () => {
 
     return dispatch => {
-        /* dispatch(getplaces([{
-            id: '1',
-            title: 'Adjamé',
-            searchKey: 'abidjan',
-        },
-        {
-            id: '2',
-            title: 'Abobo',
-            searchKey: 'abidjan',
-        },
-        {
-            id: '3',
-            title: 'Cocody',
-            searchKey: 'san Pedro',
-        },
-        {
-            id: '4',
-            title: 'Treichville',
-            searchKey: 'abidjan',
-        },
-        {
-            id: '5',
-            title: 'Yopougon',
-            searchKey: 'abidjan',
-        },
-        {
-            id: '6',
-            title: 'Anyama',
-            searchKey: 'daloa',
-        },
-        {
-            id: '7',
-            title: 'Macory',
-            searchKey: 'daloa',
-        },
-        {
-            id: '8',
-            title: 'Plateau',
-            searchKey: 'daloa'
-        },
-        {
-            id: '58694a0f-3da1-sdc-bd96-145571e29d72',
-            title: 'Third Item',
-            searchKey: 'san Pedro'
-        },
-        {
-            id: 'bd7acbea-c1b1sdds-46c2-aed5-3ad53abb28ba',
-            title: 'First Item',
-            searchKey: 'san Pedro'
-        },
-        {
-            id: 'sd-c605-48d3-a4f8-fbd91aa97f63',
-            title: 'Second Item',
-            searchKey: 'san Pedro'
-        },
-        {
-            id: 'sddssd-3da1-471f-bd96-145571e29d72',
-            title: 'Third Item',
-            searchKey: 'san Pedro'
-        },])); */
         axios
             .get(ConstApp.SERVER + 'list/commune')
             .then(res => {
@@ -137,7 +104,7 @@ export const fetchPlaces = () => {
 
         //alert('OK'); 
     };
-}
+};
 export const searchDeliveryPrice = (place_sender, place_receiver) => {
 
     return dispatch => {
@@ -189,8 +156,8 @@ export const addCourse = (token, name_sender, number_sender, type_package,
     type_course, paymentMethod, navigation, way) => {
     return dispatch => {
         dispatch(startLoading());
-        console.log("addCourse");
-        console.log(name_sender);
+        //console.log("addCourse");
+        //console.log(name_sender);
         switch (way) {
             case 'up':
                 //console.log("ok");

@@ -113,6 +113,7 @@ const mapStateToProps = state => ({
   number: state.reducerAuth.number,
   fullName: state.reducerAuth.fullName,
   id_type_user: state.reducerAuth.id_type_user,
+  error: state.reducerCourses.error,
   shownError: state.reducerCourses.shownError,
   token: state.reducerAuth.token,
   loading: state.reducerCourses.loading,

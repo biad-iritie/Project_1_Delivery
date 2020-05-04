@@ -3,6 +3,7 @@ import { Text, View, SafeAreaView, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import styles from './styles/Setting';
 import { IconOutline } from '@ant-design/icons-react-native';
+import YesNo from '../components/YesNo';
 import * as actions from '../store/actions/Auth';
 
 //import { ExpoConfigView } from '@expo/samples';
@@ -14,7 +15,7 @@ class SettingsScreen extends Component {
    */
   //return <ExpoConfigView />;
   constructor(props) {
-    super(props)
+    super(props);
     this.props.navigation.setOptions({
       headerRight: () => (
         <IconOutline

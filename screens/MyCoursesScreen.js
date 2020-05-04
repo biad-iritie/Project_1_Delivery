@@ -2,19 +2,19 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import {
-    ScrollView,
     Text,
-    TouchableOpacity,
     SafeAreaView,
     FlatList,
+    Alert
 } from 'react-native';
-import Colors from '../constants/Colors';
+//import Colors from '../constants/Colors';
 import styles from './styles/Home';
 import myAlert from '../components/MyAlert';
 import { connect } from 'react-redux';
 import MycoursesItem from '../components/MycoursesItem';
-import ConstApp from '../constants/ConstApp';
+//import ConstApp from '../constants/ConstApp';
 import Loading from '../components/Loading';
+import * as actions from '../store/actions/Courses';
 
 class MyCoursesScreen extends Component {
     constructor(props) {
@@ -24,11 +24,35 @@ class MyCoursesScreen extends Component {
     }
     detail_Course = (data) => {
         //alert('okiii');
-        this.props.navigation.navigate('DetailCourse', { course: data });
+        this.props.navigation.navigate('DetailCourse', { from: 'MyCoursesScreen', course: data });
+    }
+    change_Status = (status, numero_course) => {
+        //alert('okiii');
+        const T_status = ['Acceptée', 'En route', 'En cours', 'Terminée'];
+        const index = T_status.indexOf(status);
+
+        Alert.alert(
+            `Êtes-vous prêt à entamer le status " ${T_status[index + 1]} "`,
+            '',
+            [
+                {
+                    text: 'OUI',
+                    onPress: () => {
+                        this.props.changingStatus(this.props.token, numero_course, T_status[index + 1]);
+                    },
+                },
+                {
+                    text: 'NON',
+                    style: 'cancel',
+                },
+            ],
+            { cancelable: true },
+        );
+
     }
     render() {
-        console.log("MyCoursesScreen");
-        console.log(this.props);
+        //console.log("MyCoursesScreen");
+        console.log(this.props.myCourses);
         return (
             <SafeAreaView style={styles.container}>
                 {this.props.loading ? <Loading /> : null}
@@ -41,7 +65,7 @@ class MyCoursesScreen extends Component {
                         style={styles.list}
                         data={this.props.myCourses}
                         renderItem={({ item }) =>
-                            <MycoursesItem courses={item} detail_Course={this.detail_Course} />
+                            <MycoursesItem loading={this.props.loading} course={item} detail_Course={this.detail_Course} change_Status={this.change_Status} />
                         }
                         keyExtractor={item => item.numero_course.toString()}
 
@@ -59,13 +83,15 @@ const mapStateToProps = state => ({
     fullName: state.reducerAuth.fullName,
     id_type_user: state.reducerAuth.id_type_user,
     shownError: state.reducerCourses.shownError,
+    error: state.reducerCourses.error,
     token: state.reducerAuth.token,
     loading: state.reducerCourses.loading,
     myCourses: state.reducerCourses.myCourses,
 });
 const mapDispatchToProps = dispatch => {
     return {
-
+        changingStatus: (token, numero_course, status) =>
+            dispatch(actions.changingStatus(token, numero_course, status)),
     };
 };
 export default connect(

@@ -8,6 +8,7 @@ import { Card, WhiteSpace, NoticeBar } from '@ant-design/react-native';
 import styles from './styles/DetailCourse';
 import MyButton from '../components/MyButton';
 import ConstApp from '../constants/ConstApp';
+import YesNo from '../components/YesNo'
 import * as actions from '../store/actions/Courses';
 
 class DetailCourseScreen extends Component {
@@ -15,11 +16,11 @@ class DetailCourseScreen extends Component {
         super(props);
         console.log('DetailCourseScreen');
         console.log(props.route.params);
-        this.state = props.route.params.course;
+        this.state = props.route.params;
         //console.log(this.state);
         this.acceptanceQuestion = this.acceptanceQuestion.bind(this);
         this.deletionQuestion = this.deletionQuestion.bind(this);
-        this.deletingCourse = this.deletingCourse.bind(this);
+
     }
 
     acceptCourse = () => {
@@ -37,7 +38,7 @@ class DetailCourseScreen extends Component {
                 {
                     text: "OUI",
                     onPress: () => {
-                        this.props.deletingCourse(this.state.numero_course, navigation)
+                        this.props.deletingCourse(this.state.course.numero_course, navigation)
                     },
                 },
                 {
@@ -48,11 +49,7 @@ class DetailCourseScreen extends Component {
             { cancelable: true }
         );
     }
-    deletingCourse = () => {
-        alert('ok')
 
-        //this.props.deletingCourse(this.state.numero_course, navigation)
-    }
     makeCall = (number) => {
         let phoneNumber = '';
         if (Platform.OS === 'android') {
@@ -71,17 +68,17 @@ class DetailCourseScreen extends Component {
                             <Card.Header
                                 title="Expediteur"
                                 thumbStyle={{ width: 30, height: 30 }}
-                                extra={`nᵒ: ${this.state.numero_course}`}
+                                extra={`nᵒ: ${this.state.course.numero_course}`}
                             />
                             <Card.Body>
                                 <View>
 
-                                    <Text style={styles.dep_arriv}>Depart: {this.state.place_sender.name} </Text>
+                                    <Text style={styles.dep_arriv}>Depart: {this.state.course.place_sender.name} </Text>
                                     {
                                         this.props.id_type_user === ConstApp.ID_TYPE_CUSTOMER ? (
-                                            <TouchableOpacity onPress={() => this.makeCall(this.state.number_sender)}>
+                                            <TouchableOpacity onPress={() => this.makeCall(this.state.course.number_sender)}>
                                                 <Text style={styles.info}>
-                                                    Nom : {this.state.name_sender} / {this.state.number_sender}
+                                                    Nom : {this.state.course.name_sender} / {this.state.course.number_sender}
                                                 </Text>
                                             </TouchableOpacity>
                                         ) : null
@@ -90,16 +87,16 @@ class DetailCourseScreen extends Component {
 
 
                                     <Text style={styles.info}>
-                                        Type du colis : {this.state.type_package}
+                                        Type du colis : {this.state.course.type_package}
                                     </Text>
                                     <Text style={styles.info} >
-                                        Valeur : {this.state.value_package}
+                                        Valeur : {this.state.course.value_package}
                                     </Text>
                                     <Text style={styles.info} >
-                                        Poids approximatif : {this.state.weight_package} KG
+                                        Poids approximatif : {this.state.course.weight_package} KG
                                     </Text>
                                     <Text style={styles.info}>
-                                        Precision du lieu : {this.state.spec_place_sender}
+                                        Precision du lieu : {this.state.course.spec_place_sender}
                                     </Text>
                                 </View>
 
@@ -113,15 +110,15 @@ class DetailCourseScreen extends Component {
                             />
                             <Card.Body>
                                 <View>
-                                    <Text style={styles.dep_arriv}>Arrivée: {this.state.place_receiver.name} </Text>
+                                    <Text style={styles.dep_arriv}>Arrivée: {this.state.course.place_receiver.name} </Text>
                                     <Text style={styles.info}>
-                                        Precision du lieu : {this.state.spec_place_receiver}
+                                        Precision du lieu : {this.state.course.spec_place_receiver}
                                     </Text>
                                     {
                                         this.props.id_type_user === ConstApp.ID_TYPE_CUSTOMER ? (
-                                            <TouchableOpacity onPress={() => this.makeCall(this.state.num_receiver)}>
+                                            <TouchableOpacity onPress={() => this.makeCall(this.state.course.num_receiver)}>
                                                 <Text style={styles.info}>
-                                                    Nom / Numero : {this.state.name_receiver} / {this.state.num_receiver}
+                                                    Nom / Numero : {this.state.course.name_receiver} / {this.state.course.num_receiver}
                                                 </Text>
                                             </TouchableOpacity>
                                         ) : null
@@ -132,11 +129,11 @@ class DetailCourseScreen extends Component {
                         </Card>
                         <View>
                             <Text style={styles.info} >
-                                Type de la course : {this.state.type_course}
+                                Type de la course : {this.state.course.type_course}
                             </Text>
 
                             <Text style={styles.info} >
-                                Methode de paiement : {this.state.paymentMethod === 1 ? 'A la reception du colis' : 'A la livraison du colis'}
+                                Methode de paiement : {this.state.course.paymentMethod === 1 ? 'A la reception du colis' : 'A la livraison du colis'}
                             </Text>
                         </View>
                         <NoticeBar
@@ -149,37 +146,43 @@ class DetailCourseScreen extends Component {
                         >
                             Frais de la livraison: 1000 FCFA
                     </NoticeBar>
-                        <View style={{ flex: 1, alignItems: 'center', }}>
-                            <MyButton
-                                nameBtn={this.props.id_type_user === ConstApp.ID_TYPE_DELIVER ? 'Accepter' : 'Annuler'}
-                                loading={this.props.loading}
-                                onPress={this.props.id_type_user === ConstApp.ID_TYPE_DELIVER ? this.acceptanceQuestion : this.deletionQuestion}
-                            />
-                        </View>
+                        {
+                            this.state.from !== 'MyCoursesScreen' ?
+                                <View style={{ flex: 1, alignItems: 'center', }}>
+                                    <MyButton
+                                        nameBtn={this.props.id_type_user === ConstApp.ID_TYPE_DELIVER ? 'Accepter' : 'Annuler'}
+                                        loading={this.props.loading}
+                                        onPress={this.props.id_type_user === ConstApp.ID_TYPE_DELIVER ? this.acceptanceQuestion : this.deletionQuestion}
+                                    />
+                                </View>
+                                :
+                                null
+
+                        }
                         <WhiteSpace size="xl" />
                     </View>
 
 
                     {/* <View style={styles.container_info}>
                     <View>
-                        <Text style={styles.dep_arriv}>Depart: {this.state.place_sender.title} </Text>
+                        <Text style={styles.dep_arriv}>Depart: {this.state.course.place_sender.title} </Text>
                     </View>
                     <View>
                         <Text style={styles.info} numberOfLines={1}>
-                            {this.state.spec_place_sender}
+                            {this.state.course.spec_place_sender}
                         </Text>
                     </View>
                     <View>
-                        <Text style={styles.dep_arriv}>Arrivée: {this.state.place_receiver.title} </Text>
+                        <Text style={styles.dep_arriv}>Arrivée: {this.state.course.place_receiver.title} </Text>
                     </View>
                     <View>
                         <Text style={styles.info} numberOfLines={1}>
-                            {this.state.spec_place_receiver}
+                            {this.state.course.spec_place_receiver}
                         </Text>
                     </View>
                     <View style={{ flexDirection: 'row', flex: 1 }}>
                         <View>
-                            <Text style={styles.type_course}>{`${this.state.type_course} / ${this.state.type_package}`}</Text>
+                            <Text style={styles.type_course}>{`${this.state.course.type_course} / ${this.state.course.type_package}`}</Text>
                         </View>
                         <View style={styles.date_container}>
                             <Text style={styles.date_text}>12/03/2020</Text>
