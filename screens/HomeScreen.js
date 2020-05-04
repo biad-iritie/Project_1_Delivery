@@ -13,7 +13,7 @@ import * as actions from '../store/actions/Courses';
 //import Icon from 'react-native-vector-icons/Ionicons';
 //import { IconFill, IconOutline } from '@ant-design/icons-react-native';
 import Colors from '../constants/Colors';
-import CoursesItem from '../components/CoursesItem';
+//import CoursesItem from '../components/CoursesItem';
 import CoursesItemCust from '../components/CoursesItemCust';
 import Loading from '../components/Loading';
 import ConstApp from '../constants/ConstApp';
@@ -47,7 +47,7 @@ class HomeScreen extends React.Component {
      return {
        title: navigation.getParam('Title', 'Mes courses'),
      };*/
-    this.detail_Course = this.detail_Course.bind(this);
+    //this.detail_Course = this.detail_Course.bind(this);
 
   }
   componentDidMount() {
@@ -55,7 +55,7 @@ class HomeScreen extends React.Component {
   }
   detail_Course = (data) => {
     //alert('okiii');
-    this.props.navigation.navigate('DetailCourse', { course: data });
+    this.props.navigation.navigate('DetailCourse', { from: 'HomeScreen', course: data });
   }
 
 
@@ -69,18 +69,24 @@ class HomeScreen extends React.Component {
         {this.props.shownError === true && this.props.error !== null
           ? myAlert(this.props.titleError, this.props.error)
           : null}
-        {this.props.id_type_user === ConstApp.ID_TYPE_CUSTOMER && this.props.courses.length !== 0 ? (
+        {this.props.courses.length !== 0 ? (
           <FlatList
             style={styles.list}
             data={this.props.courses}
+            refreshing={false}
+            onRefresh={() => { alert('onRefresh') }}
             renderItem={({ item }) =>
               <CoursesItemCust courses={item} detail_Course={this.detail_Course} delete_Course={this.delete_Course} />
             }
             keyExtractor={item => item.numero_course.toString()}
+            onEndReachedThreshold={1}
+            onEndReached={() => {
+              alert('onEndReached');
+            }}
 
           />
         ) : null}
-        {this.props.id_type_user === ConstApp.ID_TYPE_DELIVER && this.props.courses.length !== 0 ? (
+        {/* {this.props.id_type_user === ConstApp.ID_TYPE_DELIVER && this.props.courses.length !== 0 ? (
           <FlatList
             style={styles.list}
             data={this.props.courses}
@@ -89,7 +95,7 @@ class HomeScreen extends React.Component {
             }
             keyExtractor={item => item.numero_course.toString()}
           />
-        ) : null}
+        ) : null} */}
         {this.props.courses.length === 0 ? (
           <Text style={styles.developmentModeText}>
             Aucune course pour l'instant !

@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import styles from './style/CoursesItem';
+import moment from 'moment';
 
 class CoursesItemCust extends Component {
     constructor(props) {
@@ -38,7 +39,7 @@ class CoursesItemCust extends Component {
                                 <Text style={styles.type_course}>{`${this.props.courses.type_course} / ${this.props.courses.type_package}`}</Text>
                             </View>
                             <View style={styles.date_container}>
-                                <Text style={styles.date_text}>12/03/2020</Text>
+                                <Text style={styles.date_text}>{moment(new Date('12/03/2020')).format('DD/MM/YY')}</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
